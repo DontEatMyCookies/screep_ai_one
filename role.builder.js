@@ -21,8 +21,8 @@ var roleBuilder = {
             spawnPos = Game.spawns.Spawn1.pos;
             //create build array
             buildArray = []
-            for (i = -1; i <=1; i++){
-                for (o = -1; o <=1; o++){
+            for (i = -2; i <=2; i++){
+                for (o = -2; o <=2; o++){
                     //console.log(spawnPos["x"]-i+"_"+spawnPos["y"]-o)
                     //console.log("x: "+spawnPos["x"]+"   y: "+spawnPos["y"]);
                     buildArray.push([spawnPos["x"]+i, spawnPos["y"]+o]);
@@ -30,12 +30,21 @@ var roleBuilder = {
             }
             //visualize build area
             //Game.rooms["W5N8"].createConstructionSite(buildArray[0][0], buildArray[0][1], STRUCTURE_EXTENSION);
-            new RoomVisual("W5N8").rect(buildArray[0][0],buildArray[0][1],buildArray[buildArray.length -1][0]-buildArray[0][0],buildArray[buildArray.length -1][1]-buildArray[0][1])
+            showVisCon = false;
+            if(showVisCon){
+                new RoomVisual("W5N8").rect(buildArray[0][0],buildArray[0][1],buildArray[buildArray.length -1][0]-buildArray[0][0],buildArray[buildArray.length -1][1]-buildArray[0][1]);
+            }
+
             //create construction sites
+            helper = [spawnPos["x"], spawnPos["y"]];
             for (i = 0; i < buildArray.length; i++){
                 if (buildArray[i][0] != spawnPos["x"] && buildArray[i][1] != spawnPos["y"]){
                     Game.rooms["W5N8"].createConstructionSite(buildArray[i][0], buildArray[i][1], STRUCTURE_EXTENSION);
-                    console.log("building extension: "+buildArray[i][0]+" "+buildArray[i][1]);
+                    //console.log("building extension: "+buildArray[i][0]+" "+buildArray[i][1]);
+                }else if (buildArray[i] != helper){
+                    //console.log(buildArray[i]+" - "+helper)
+                    //console.log(buildArray[i][0] != helper[0])
+                    Game.rooms["W5N8"].createConstructionSite(buildArray[i][0], buildArray[i][1], STRUCTURE_ROAD);
                 }
             }
             //get construction sites and move

@@ -12,21 +12,25 @@ module.exports.loop = function () {
     //get creep count by role
     var creepDic = {
         harvester: 0,
-        upgrader: 0
+        upgrader: 0,
+        builder: 0
     };
     for (creeps in Game.creeps){
         creepDic[Game.creeps[creeps].memory.role] = creepDic[Game.creeps[creeps].memory.role] + 1;
         //console.log(creeps);
     }
+    //service text
+    new RoomVisual("W5N8").text("Bucket: "+Game.cpu.bucket, 29, 0, 0)
+    //new RoomVisual("W5N8").text("CPU: "+Game.cpu.getUsed(), 29, 1, 0)
     //spawn creeps
-    if (!("harvester" in Game.creeps)) {
-            Game.spawns["Spawn1"].spawnCreep([WORK, CARRY, MOVE, MOVE], "harvester", {memory : {role:"harvester", harvSource:[]}})
+    if (creepDic["harvester"] <= 1) {
+            Game.spawns["Spawn1"].spawnCreep([WORK, CARRY, MOVE, MOVE], "harvester"+Game.time, {memory : {role:"harvester", harvSource:[], extensionFills:[] }})
         }
     if (creepDic["upgrader"] <= 4) {
-            Game.spawns["Spawn1"].spawnCreep([WORK, CARRY, CARRY, MOVE, MOVE], "upgrader"+Game.time, {memory : {role:"upgrader", fillCore:false, harvSource:[]}})
+            Game.spawns["Spawn1"].spawnCreep([WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], "upgrader"+Game.time, {memory : {role:"upgrader", fillCore:false, harvSource:[] }})
         }
-    if (!("builder" in Game.creeps)) {
-            Game.spawns["Spawn1"].spawnCreep([WORK, CARRY, MOVE, MOVE], "builder", {memory : {role:"builder", fillCore:false , harvSource:[]}});
+    if (creepDic["builder"] <= 2) {
+            Game.spawns["Spawn1"].spawnCreep([WORK, CARRY, CARRY, MOVE, MOVE], "builder"+Game.time, {memory : {role:"builder", fillCore:false , harvSource:[], toBuild:[] }});
         }
     
     for(var name in Game.creeps) {
