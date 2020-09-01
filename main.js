@@ -20,16 +20,18 @@ module.exports.loop = function () {
         //console.log(creeps);
     }
     //service text
-    new RoomVisual("W5N8").text("Bucket: "+Game.cpu.bucket, 29, 0, 0)
-    //new RoomVisual("W5N8").text("CPU: "+Game.cpu.getUsed(), 29, 1, 0)
+    new RoomVisual("W5N8").text("Energy: "+Game.rooms["W5N8"].energyAvailable+"/"+Game.rooms["W5N8"].energyCapacityAvailable, 29, 0, 0);
+    new RoomVisual("W5N8").text("Bucket: "+Game.cpu.bucket, 29, 1, 0);
+    new RoomVisual("W5N8").text("Controller: "+parseInt((Game.getObjectById("cdbf0773313f0a9").progress/Game.getObjectById("cdbf0773313f0a9").progressTotal)*100, 10)+"%", 29, 2, 0);
+    
     //spawn creeps
     if (creepDic["harvester"] <= 1) {
-            Game.spawns["Spawn1"].spawnCreep([WORK, CARRY, MOVE, MOVE], "harvester"+Game.time, {memory : {role:"harvester", harvSource:[], extensionFills:[] }})
+            Game.spawns["Spawn1"].spawnCreep([WORK, WORK, CARRY, MOVE, MOVE, MOVE], "harvester"+Game.time, {memory : {role:"harvester", harvSource:[], extensionFills:[] }})
         }
     if (creepDic["upgrader"] <= 4) {
-            Game.spawns["Spawn1"].spawnCreep([WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], "upgrader"+Game.time, {memory : {role:"upgrader", fillCore:false, harvSource:[] }})
+            Game.spawns["Spawn1"].spawnCreep([WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], "upgrader"+Game.time, {memory : {role:"upgrader", fillCore:false, harvSource:[] }})
         }
-    if (creepDic["builder"] <= 2) {
+    if (creepDic["builder"] <= 1) {
             Game.spawns["Spawn1"].spawnCreep([WORK, CARRY, CARRY, MOVE, MOVE], "builder"+Game.time, {memory : {role:"builder", fillCore:false , harvSource:[], toBuild:[] }});
         }
     

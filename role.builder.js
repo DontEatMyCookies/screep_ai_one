@@ -16,13 +16,13 @@ var roleBuilder = {
                 //console.log("Builder info: Capacity full");
                 creep.say("full🤤"), true;
             }
-        }
-        else {
+        } else {
             spawnPos = Game.spawns.Spawn1.pos;
-            //create build array
+            //create build array for extentions
+            var extensionSize = 2;
             buildArray = []
-            for (i = -2; i <=2; i++){
-                for (o = -2; o <=2; o++){
+            for (i = -extensionSize; i <=extensionSize; i++){
+                for (o = -extensionSize; o <=extensionSize; o++){
                     //console.log(spawnPos["x"]-i+"_"+spawnPos["y"]-o)
                     //console.log("x: "+spawnPos["x"]+"   y: "+spawnPos["y"]);
                     buildArray.push([spawnPos["x"]+i, spawnPos["y"]+o]);
@@ -49,6 +49,7 @@ var roleBuilder = {
             }
             //get construction sites and move
             var btargets = creep.room.find(FIND_CONSTRUCTION_SITES);
+            //console.log(creep.room.find(FIND_CONSTRUCTION_SITES));
             if(btargets.length) {
                 if(creep.build(btargets[0]) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(btargets[0], {visualizePathStyle: {stroke: '#ffffff'}});
@@ -59,6 +60,11 @@ var roleBuilder = {
                 creep.say("empty😱", true);
                 creep.memory.fillCore = false;
                 creep.memory.harvSource = creep.room.find(FIND_SOURCES).map(x=>x.id);
+            }else{
+                //creep.moveTo(9,12)
+            }
+            if(creep.room.find(FIND_CONSTRUCTION_SITES) == ""){
+                creep.moveTo(9,12)
             }
         }
     }
