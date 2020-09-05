@@ -28,7 +28,7 @@ var roleBuilder = {
                     buildArray.push([spawnPos["x"]+i, spawnPos["y"]+o]);
                 }
             }
-            //visualize build area
+            //visualize build area for extensions
             //Game.rooms["W5N8"].createConstructionSite(buildArray[0][0], buildArray[0][1], STRUCTURE_EXTENSION);
             showVisCon = false;
             if(showVisCon){
@@ -37,6 +37,11 @@ var roleBuilder = {
 
             //create construction sites
             helper = [spawnPos["x"], spawnPos["y"]];
+            //Storage + ROAD connection
+            Game.rooms["W5N8"].createConstructionSite(helper[0]+3, helper[1], STRUCTURE_ROAD);
+            Game.rooms["W5N8"].createConstructionSite(helper[0]+4, helper[1], STRUCTURE_STORAGE);
+            
+            //Extensions
             for (i = 0; i < buildArray.length; i++){
                 if (buildArray[i][0] != spawnPos["x"] && buildArray[i][1] != spawnPos["y"]){
                     Game.rooms["W5N8"].createConstructionSite(buildArray[i][0], buildArray[i][1], STRUCTURE_EXTENSION);
@@ -46,6 +51,11 @@ var roleBuilder = {
                     //console.log(buildArray[i][0] != helper[0])
                     Game.rooms["W5N8"].createConstructionSite(buildArray[i][0], buildArray[i][1], STRUCTURE_ROAD);
                 }
+            }
+            //road Store to Controller
+            if (creep.memory.checkRoad){
+                console.log("road check");
+                creep.memory.checkRoad = false;
             }
             //get construction sites and move
             var btargets = creep.room.find(FIND_CONSTRUCTION_SITES);
@@ -63,6 +73,7 @@ var roleBuilder = {
             }else{
                 //creep.moveTo(9,12)
             }
+            //move to parking space
             if(creep.room.find(FIND_CONSTRUCTION_SITES) == ""){
                 creep.moveTo(9,12)
             }

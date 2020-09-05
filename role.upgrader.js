@@ -13,7 +13,7 @@ var roleUpgrader = {
             if (creep.store.getFreeCapacity() == 0){
                 creep.memory.fillCore = true;
                 //console.log("Builder info: Capacity full");
-                creep.say("full🤤"), true;
+                creep.say("full🤤", true);
             }
         }
         else {

@@ -9,10 +9,11 @@ var roleHarvester = {
             }
             if (!creep.memory.extensionFills[0]){
                 creep.memory.extensionFills = Game.spawns.Spawn1.room.find(FIND_MY_STRUCTURES, {filter: { structureType: STRUCTURE_EXTENSION }}).map(x=>x.id);
-                console.log(creep.memory.extensionFills);
+                //console.log(creep.memory.extensionFills);
             }
             //var sources = creep.room.find(FIND_SOURCES);
             if(creep.harvest(Game.getObjectById(creep.memory.harvSource[0])) == ERR_NOT_IN_RANGE) {
+                //console.log(String(creep.pos.findPathTo(creep.memory.harvSource[0])));
                 creep.moveTo(Game.getObjectById(creep.memory.harvSource[0]));
             }
         }
